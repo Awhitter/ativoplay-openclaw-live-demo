@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AtivoPlay × OpenClaw | Demo Ao Vivo</title>
+  <style>
+    :root {
+      --bg:#070b16;
+      --bg-soft:#0f172d;
+      --card:#121d38cc;
+      --card-2:#0f1a32cc;
+      --line:#2a3b6d;
+      --text:#edf2ff;
+      --muted:#b8c6ea;
+      --accent:#6ea2ff;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --err:#ef4444;
+      --radius:18px;
+      --shadow:0 14px 40px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:radial-gradient(1000px 500px at 90% -10%,#284d9a55,transparent 65%),linear-gradient(135deg,var(--bg),#0b1430 55%,#11152a);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    .container{width:min(1250px,94vw);margin:18px auto 34px}
+    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow)}
+    .brand{display:flex;gap:10px;align-items:center}
+    .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#84ccff,#4f46e5)}
+    .title{font-weight:700;font-size:1.05rem}
+    .subtitle{font-size:.86rem;color:var(--muted)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    button{background:#1f3262;border:1px solid #355196;color:#e9f0ff;padding:8px 12px;border-radius:10px;font-weight:600;cursor:pointer}
+    button:hover{filter:brightness(1.08)}
+
+    .layout{display:grid;grid-template-columns:280px 1fr;gap:14px;margin-top:14px}
+    .nav{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow);height:calc(100vh - 130px);position:sticky;top:12px;overflow:auto}
+    .nav h3{margin:4px 6px 10px;font-size:.9rem;color:#dce7ff;letter-spacing:.04em;text-transform:uppercase}
+    .nav button{width:100%;text-align:left;background:#152448;border:1px solid #2a427e;margin-bottom:8px}
+    .nav button.active{background:linear-gradient(135deg,#214186,#2a3f7a);border-color:#6ea2ff;color:white}
+
+    .main{display:grid;gap:14px}
+    .panel{background:var(--card-2);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+    .panel h2{margin:0 0 10px;font-size:1.18rem}
+    .panel p{margin:0;color:var(--muted);line-height:1.5}
+
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(12,1fr)}
+    .col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
+
+    .kpi{padding:14px;border:1px solid #2e447e;background:#122149;border-radius:14px}
+    .kpi .v{font-size:1.5rem;font-weight:800;margin:4px 0}.kpi .l{font-size:.9rem;color:#c5d3f2}
+
+    .flow{display:grid;gap:8px;margin-top:10px}
+    .flow div{padding:10px;border:1px solid #34508e;background:#10203f;border-radius:10px;font-size:.95rem;color:#dbe8ff}
+
+    .terminal{background:#060a14;border:1px solid #223968;border-radius:12px;padding:12px;height:270px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84rem;line-height:1.45}
+    .line{margin:0 0 6px;white-space:pre-wrap}
+    .ok{color:#86efac}.warn{color:#fcd34d}.err{color:#fca5a5}.info{color:#93c5fd}
+
+    .cards{display:grid;gap:10px}
+    .case{border:1px solid #334f8a;background:#122247;padding:12px;border-radius:12px}
+    .case h4{margin:0 0 6px}
+    .case ul{margin:0;padding-left:17px;color:#c7d5f4}
+
+    .timeline{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+    .timeline li{padding:10px 12px;border:1px solid #36528f;border-radius:10px;background:#0f1f42}
+
+    .tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#1d3266;border:1px solid #4569b6;color:#dce8ff;font-size:.75rem;margin-right:6px}
+
+    .hidden{display:none}
+
+    @media (max-width:1000px){
+      .layout{grid-template-columns:1fr}
+      .nav{position:relative;height:auto}
+      .col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 12}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <div class="brand">
+      <span class="dot"></span>
+      <div>
+        <div class="title">AtivoPlay × OpenClaw — Demonstração Ao Vivo</div>
+        <div class="subtitle">Mostrando poder real de IA para vendas, operação, suporte e expansão</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button onclick="startLiveDemo()">▶ Rodar demo ao vivo</button>
+      <button onclick="window.print()">🖨 Exportar PDF</button>
+      <button onclick="location.reload()">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="nav">
+      <h3>Módulos</h3>
+      <button class="tab active" data-tab="visao">1. Visão Executiva</button>
+      <button class="tab" data-tab="vendas">2. Copiloto Comercial</button>
+      <button class="tab" data-tab="operacao">3. Operação Inteligente</button>
+      <button class="tab" data-tab="suporte">4. Suporte & CS</button>
+      <button class="tab" data-tab="automacao">5. Automação & Alertas</button>
+      <button class="tab" data-tab="poc">6. Plano de PoC 30 dias</button>
+      <button class="tab" data-tab="roteiro">7. Roteiro da reunião</button>
+    </aside>
+
+    <main class="main">
+      <section id="visao" class="panel tab-panel">
+        <h2>1) Visão executiva: o que muda na prática</h2>
+        <p>OpenClaw vira a camada de inteligência da AtivoPlay: menos tarefas manuais, mais velocidade comercial e operação preditiva. Não substitui equipe — multiplica performance.</p>
+        <div class="grid" style="margin-top:12px">
+          <div class="kpi col-4"><div class="l">Tempo de proposta</div><div class="v">-50% a -70%</div><div class="l">Resposta comercial muito mais rápida</div></div>
+          <div class="kpi col-4"><div class="l">Incidentes sem dono</div><div class="v">-40%</div><div class="l">Alertas e rotinas automáticas</div></div>
+          <div class="kpi col-4"><div class="l">Percepção de valor</div><div class="v">+Alta</div><div class="l">Relatórios claros para cliente final</div></div>
+          <div class="panel col-12" style="padding:12px">
+            <span class="tag">Go-to-market</span><span class="tag">Escala operacional</span><span class="tag">Upsell</span><span class="tag">Fidelização</span>
+            <div class="flow">
+              <div>Lead entra → IA monta proposta por segmento</div>
+              <div>Cliente fecha → IA gera checklist de implantação + templates de conteúdo</div>
+              <div>Operação roda → IA monitora risco e envia resumo diário para responsáveis</div>
+              <div>Renovação/upsell → IA compila resultados e sugere próxima oferta</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="vendas" class="panel tab-panel hidden">
+        <h2>2) Copiloto Comercial (Pré-vendas + Vendas)</h2>
+        <div class="grid">
+          <div class="col-7">
+            <div class="cards">
+              <div class="case"><h4>Proposta consultiva em minutos</h4><ul><li>Plano por vertical (varejo, restaurante, imobiliário, academia, corporativo).</li><li>Estratégia de conteúdo por horário e objetivo (tráfego, ticket médio, awareness).</li><li>Copy PT-BR/EN com CTA e linguagem por persona.</li></ul></div>
+              <div class="case"><h4>Simulação de planos e preços</h4><ul><li>Comparativo entre pacotes por quantidade de telas.</li><li>Projeção de expansão (5→10→15 telas).</li><li>Material pronto para call de fechamento.</li></ul></div>
+            </div>
+          </div>
+          <div class="col-5 panel" style="padding:12px">
+            <h3 style="margin:0 0 8px">Prompt demo (ao vivo)</h3>
+            <p style="font-family:ui-monospace,monospace;color:#d2e2ff">"Crie proposta para rede com 12 telas em 4 lojas, foco em aumentar ticket médio no almoço, com plano de conteúdo de 30 dias, métricas e roteiro de implantação."</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="operacao" class="panel tab-panel hidden">
+        <h2>3) Operação Inteligente (NOC de Digital Signage com IA)</h2>
+        <div class="grid">
+          <div class="col-6 panel" style="padding:12px">
+            <h3 style="margin:0 0 8px">Detecção e priorização</h3>
+            <ul>
+              <li>Telas offline por grupo/região.</li>
+              <li>Playlists sem atualização acima do SLA.</li>
+              <li>Conflito de agendamento por horário.</li>
+              <li>Falhas recorrentes com sugestão de ação.</li>
+            </ul>
+          </div>
+          <div class="col-6 panel" style="padding:12px">
+            <h3 style="margin:0 0 8px">Resumo para gestão</h3>
+            <ul>
+              <li>Relatório diário automático (8h) com semáforo operacional.</li>
+              <li>Resumo semanal para diretoria com tendências.</li>
+              <li>Top 5 riscos da semana + plano corretivo.</li>
+            </ul>
+          </div>
+          <div class="col-12 panel" style="padding:12px">
+            <h3 style="margin:0 0 8px">Exemplo de saída executiva</h3>
+            <p>“Hoje: 94,8% da rede operacional. 6 telas com falha intermitente (2 lojas). 3 campanhas com atualização pendente. Risco moderado. Ação recomendada: reinício remoto grupo Sul + revisão de agenda da campanha ‘Almoço Express’.”</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="suporte" class="panel tab-panel hidden">
+        <h2>4) Suporte e Customer Success</h2>
+        <div class="grid">
+          <div class="col-6">
+            <ol class="timeline">
+              <li><strong>Onboarding automático:</strong> checklist por tipo de cliente + material inicial.</li>
+              <li><strong>Base de respostas:</strong> macros para dúvidas recorrentes com tom padronizado.</li>
+              <li><strong>Follow-up inteligente:</strong> mensagens de acompanhamento por etapa.</li>
+              <li><strong>QBR simplificado:</strong> IA monta resumo trimestral com valor entregue.</li>
+            </ol>
+          </div>
+          <div class="col-6 panel" style="padding:12px">
+            <h3 style="margin:0 0 8px">Impacto</h3>
+            <ul>
+              <li>Redução de tempo médio de resposta.</li>
+              <li>Mais consistência no atendimento.</li>
+              <li>Maior retenção por comunicação proativa.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="automacao" class="panel tab-panel hidden">
+        <h2>5) Automação e Alertas (Telegram/WhatsApp)</h2>
+        <div class="grid">
+          <div class="col-5 panel" style="padding:12px">
+            <h3 style="margin:0 0 8px">Regras exemplo</h3>
+            <ul>
+              <li>Se grupo “Lojas SP” offline > 20min → alerta time técnico.</li>
+              <li>Todo dia 08:00 → resumo operacional.</li>
+              <li>Sexta 17:00 → resumo executivo + backlog crítico.</li>
+            </ul>
+          </div>
+          <div class="col-7">
+            <div class="terminal" id="terminal"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="poc" class="panel tab-panel hidden">
+        <h2>6) PoC detalhada — 30 dias</h2>
+        <div class="grid">
+          <div class="col-4 panel" style="padding:12px"><h3>Semana 1</h3><p>Mapeamento de fluxos, definição de KPIs, setup de rotinas e alertas.</p></div>
+          <div class="col-4 panel" style="padding:12px"><h3>Semana 2</h3><p>Piloto operacional em 1 segmento (10–20 telas), ajustes de prompt e playbook.</p></div>
+          <div class="col-4 panel" style="padding:12px"><h3>Semana 3</h3><p>Ampliação de uso comercial + relatórios automáticos para gestão.</p></div>
+          <div class="col-12 panel" style="padding:12px"><h3>Semana 4</h3><p>Avaliação de resultado, plano de escala, pacote recomendado e ROI preliminar.</p></div>
+        </div>
+      </section>
+
+      <section id="roteiro" class="panel tab-panel hidden">
+        <h2>7) Roteiro da conversa com o owner (fala sugerida)</h2>
+        <div class="cards">
+          <div class="case"><h4>Abertura (30s)</h4><ul><li>“Vocês já têm produto forte. A proposta aqui é adicionar inteligência operacional e comercial sem fricção.”</li></ul></div>
+          <div class="case"><h4>Valor (1 min)</h4><ul><li>“A IA reduz tempo de proposta, melhora resposta ao cliente e antecipa problemas da rede de telas.”</li></ul></div>
+          <div class="case"><h4>Demonstração (3–5 min)</h4><ul><li>Executar prompt comercial, gerar resumo operacional e mostrar alerta automatizado.</li></ul></div>
+          <div class="case"><h4>Fechamento (1 min)</h4><ul><li>“Vamos rodar PoC de 30 dias com metas claras: velocidade, SLA e satisfação do cliente.”</li></ul></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      panels.forEach(p => p.classList.add('hidden'));
+      document.getElementById(tab).classList.remove('hidden');
+    });
+  });
+
+  const logLines = [
+    ['info', '[OpenClaw] Iniciando monitoramento da rede AtivoPlay...'],
+    ['ok',   '[OK] 187 telas conectadas • 94.8% uptime nas últimas 24h'],
+    ['warn', '[ALERTA] Grupo Lojas Sul: 3 telas offline há 27 minutos'],
+    ['info', '[AÇÃO] Gerando resumo executivo para gestor regional...'],
+    ['ok',   '[ENVIADO] Telegram #operacoes: resumo diário + recomendações'],
+    ['warn', '[ALERTA] Campanha “Menu Executivo” sem atualização em 4 unidades'],
+    ['info', '[AÇÃO] Sugestão aplicada: agendamento 11:00–15:00 em todas as lojas'],
+    ['ok',   '[CS] Relatório semanal preparado para reunião com cliente final'],
+    ['info', '[COMERCIAL] Proposta para expansão 10→20 telas pronta em 42 segundos'],
+    ['ok',   '[FIM] Fluxo demonstrativo concluído com sucesso']
+  ];
+
+  function typeLine(term, klass, text, delay) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const p = document.createElement('div');
+        p.className = 'line ' + klass;
+        p.textContent = text;
+        term.appendChild(p);
+        term.scrollTop = term.scrollHeight;
+        resolve();
+      }, delay);
+    });
+  }
+
+  async function startLiveDemo() {
+    const autoTab = document.querySelector('[data-tab="automacao"]');
+    autoTab.click();
+    const term = document.getElementById('terminal');
+    term.innerHTML = '';
+
+    for (const [klass, text] of logLines) {
+      await typeLine(term, klass, text, 550);
+    }
+  }
+</script>
+</body>
+</html>

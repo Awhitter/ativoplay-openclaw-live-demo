@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AtivoPlay + OpenClaw | Demonstração de IA</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg2: #121a33;
+      --card: rgba(255, 255, 255, 0.08);
+      --text: #eaf0ff;
+      --muted: #b5c2e6;
+      --accent: #7c9cff;
+      --accent2: #34d399;
+      --warn: #f59e0b;
+      --pink: #f472b6;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% -10%, #2a3c7f44, transparent 60%),
+        radial-gradient(900px 500px at 90% 0%, #0ea5e944, transparent 60%),
+        linear-gradient(135deg, var(--bg), var(--bg2));
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(1120px, 92vw);
+      margin: 0 auto;
+      padding: 28px 0 80px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-top: 8px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-left {
+      padding: 36px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4.2vw, 3.5rem);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      line-height: 1.5;
+      max-width: 58ch;
+      margin-bottom: 24px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge {
+      border: 1px solid rgba(255,255,255,.2);
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: #d9e4ff;
+      font-size: .92rem;
+      background: rgba(255,255,255,.04);
+    }
+
+    .hero-right {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      padding: 16px 18px;
+    }
+
+    .metric strong {
+      font-size: 1.4rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .span-6 { grid-column: span 6; }
+    .span-4 { grid-column: span 4; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.25rem, 2vw, 1.8rem);
+      letter-spacing: -.01em;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    p, li { color: var(--muted); line-height: 1.55; }
+
+    ul { margin: 8px 0 0 18px; padding: 0; }
+
+    .pill {
+      display: inline-block;
+      font-size: .82rem;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      background: rgba(124,156,255,.18);
+      color: #dce5ff;
+      border: 1px solid rgba(124,156,255,.45);
+    }
+
+    .timeline {
+      counter-reset: step;
+      list-style: none;
+      margin: 8px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline li {
+      position: relative;
+      padding: 12px 14px 12px 44px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .timeline li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 12px;
+      top: 11px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #4f7cff);
+      color: white;
+      font-size: .82rem;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .kpi-list {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      margin-top: 12px;
+    }
+
+    .kpi {
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(255,255,255,.04);
+    }
+
+    .kpi strong { display: block; margin-bottom: 4px; color: #fff; }
+
+    .footer-note {
+      margin-top: 20px;
+      color: #9fb1de;
+      font-size: .92rem;
+      opacity: .9;
+    }
+
+    .cta {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), #527dff);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-weight: 600;
+      font-size: .95rem;
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,.05);
+      color: #deebff;
+    }
+
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .span-6, .span-4, .span-8 { grid-column: span 12; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="panel hero-left">
+        <div class="pill">Demonstração Executiva • IA + Digital Signage</div>
+        <h1>Como o <span style="color:var(--accent2)">OpenClaw</span> acelera o impacto da AtivoPlay</h1>
+        <p class="subtitle">
+          Uma demonstração prática de como IA pode atuar como copiloto comercial e operacional:
+          planejamento de campanhas, monitoramento inteligente, automações e comunicação proativa com clientes.
+        </p>
+        <div class="badges">
+          <span class="badge">⚡ Resposta em segundos</span>
+          <span class="badge">📊 Foco em resultado</span>
+          <span class="badge">🧩 Integração operacional</span>
+          <span class="badge">💬 Entrega via Telegram/WhatsApp</span>
+        </div>
+      </div>
+
+      <div class="panel hero-right">
+        <div class="metric">
+          <strong>+Velocidade Comercial</strong>
+          propostas e planos de campanha em minutos
+        </div>
+        <div class="metric">
+          <strong>+Eficiência Operacional</strong>
+          checklist, alertas e acompanhamento automático
+        </div>
+        <div class="metric">
+          <strong>+Percepção de Valor</strong>
+          relatórios executivos claros para o cliente final
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card span-6">
+        <h2>1) Copiloto de Vendas e Pré-vendas</h2>
+        <p>OpenClaw transforma uma conversa em proposta consultiva de alto nível.</p>
+        <ul>
+          <li>Gera plano de campanha por segmento (varejo, alimentação, imobiliário, corporativo).</li>
+          <li>Cria textos promocionais em PT-BR e EN com ajuste por público.</li>
+          <li>Sugere estrutura de playlists por horário, loja e objetivo.</li>
+          <li>Monta checklist de implantação para reduzir erros de onboarding.</li>
+        </ul>
+      </article>
+
+      <article class="card span-6">
+        <h2>2) Copiloto de Operações</h2>
+        <p>De manutenção reativa para gestão proativa da rede de telas.</p>
+        <ul>
+          <li>Resumo diário de telas offline, conteúdo desatualizado e falhas de agenda.</li>
+          <li>Regras de alerta (ex: “grupo X offline por mais de 30 minutos”).</li>
+          <li>Padronização de rotina operacional com playbooks automáticos.</li>
+          <li>Escalonamento de incidentes para time técnico em tempo real.</li>
+        </ul>
+      </article>
+
+      <article class="card span-8">
+        <h2>3) Roteiro de Demo (10 minutos)</h2>
+        <ol class="timeline">
+          <li><strong>Min 1–2:</strong> “Monte um plano para 15 telas em 3 lojas, com foco em aumento de ticket médio.”</li>
+          <li><strong>Min 3–4:</strong> “Agora adapte para restaurante com cardápio dinâmico e oferta do dia.”</li>
+          <li><strong>Min 5–6:</strong> “Gere checklist operacional diário e regras de alerta.”</li>
+          <li><strong>Min 7–8:</strong> “Crie relatório executivo semanal para o cliente final.”</li>
+          <li><strong>Min 9–10:</strong> “Automatize envio diário e semanal via Telegram/WhatsApp.”</li>
+        </ol>
+      </article>
+
+      <article class="card span-4">
+        <h2>4) KPIs para Prova de Valor (PoC)</h2>
+        <div class="kpi-list">
+          <div class="kpi"><strong>Tempo de setup</strong><span>redução de 30% a 60%</span></div>
+          <div class="kpi"><strong>SLA operacional</strong><span>menos ocorrências sem tratamento</span></div>
+          <div class="kpi"><strong>Velocidade comercial</strong><span>mais propostas por semana</span></div>
+          <div class="kpi"><strong>Satisfação do cliente</strong><span>comunicação clara e recorrente</span></div>
+        </div>
+      </article>
+
+      <article class="card span-12">
+        <h2>Mensagem Final para o Owner</h2>
+        <p>
+          “A AtivoPlay já tem uma base forte de produto. Com OpenClaw, vocês ganham uma camada de inteligência aplicada no dia a dia: 
+          mais velocidade na venda, mais controle na operação e mais percepção de valor para o cliente final — com baixo atrito de adoção.”
+        </p>
+
+        <div class="cta">
+          <a href="#" class="btn" onclick="window.print(); return false;">🖨️ Exportar/Imprimir em PDF</a>
+          <a href="#" class="btn secondary" onclick="alert('Sugestão: rode uma PoC de 30 dias com 1 segmento e 10–20 telas.'); return false;">🚀 Próximo passo: PoC 30 dias</a>
+        </div>
+
+        <p class="footer-note">
+          Material de demonstração única • foco em mostrar poder de IA para contexto de digital signage.
+        </p>
+      </article>
+    </section>
+  </div>
+</body>
+</html>
