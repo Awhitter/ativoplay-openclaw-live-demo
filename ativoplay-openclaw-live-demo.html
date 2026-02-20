@@ -2,283 +2,417 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AtivoPlay × OpenClaw | Demo Ao Vivo</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AtivoPlay × OpenClaw — Experience Deck 2026</title>
+  <meta name="description" content="Demonstração premium do potencial AtivoPlay + OpenClaw para operação, vendas e automação em digital signage." />
   <style>
     :root {
-      --bg:#070b16;
-      --bg-soft:#0f172d;
-      --card:#121d38cc;
-      --card-2:#0f1a32cc;
-      --line:#2a3b6d;
-      --text:#edf2ff;
-      --muted:#b8c6ea;
-      --accent:#6ea2ff;
-      --ok:#22c55e;
-      --warn:#f59e0b;
-      --err:#ef4444;
-      --radius:18px;
-      --shadow:0 14px 40px rgba(0,0,0,.45);
+      --bg: #060814;
+      --bg-soft: #0f1730;
+      --panel: rgba(18, 27, 55, 0.75);
+      --panel-2: rgba(14, 22, 46, 0.75);
+      --line: rgba(126, 159, 255, 0.25);
+      --text: #eef3ff;
+      --muted: #b8c6ea;
+      --accent: #7ea2ff;
+      --accent-2: #4de7c8;
+      --hot: #ff7bb7;
+      --ok: #86efac;
+      --warn: #fcd34d;
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+      --radius: 18px;
+      --radius-lg: 28px;
     }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:radial-gradient(1000px 500px at 90% -10%,#284d9a55,transparent 65%),linear-gradient(135deg,var(--bg),#0b1430 55%,#11152a);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-    .container{width:min(1250px,94vw);margin:18px auto 34px}
-    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow)}
-    .brand{display:flex;gap:10px;align-items:center}
-    .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#84ccff,#4f46e5)}
-    .title{font-weight:700;font-size:1.05rem}
-    .subtitle{font-size:.86rem;color:var(--muted)}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    button{background:#1f3262;border:1px solid #355196;color:#e9f0ff;padding:8px 12px;border-radius:10px;font-weight:600;cursor:pointer}
-    button:hover{filter:brightness(1.08)}
 
-    .layout{display:grid;grid-template-columns:280px 1fr;gap:14px;margin-top:14px}
-    .nav{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow);height:calc(100vh - 130px);position:sticky;top:12px;overflow:auto}
-    .nav h3{margin:4px 6px 10px;font-size:.9rem;color:#dce7ff;letter-spacing:.04em;text-transform:uppercase}
-    .nav button{width:100%;text-align:left;background:#152448;border:1px solid #2a427e;margin-bottom:8px}
-    .nav button.active{background:linear-gradient(135deg,#214186,#2a3f7a);border-color:#6ea2ff;color:white}
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); }
 
-    .main{display:grid;gap:14px}
-    .panel{background:var(--card-2);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
-    .panel h2{margin:0 0 10px;font-size:1.18rem}
-    .panel p{margin:0;color:var(--muted);line-height:1.5}
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -20% auto auto -20%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle at center, rgba(126,162,255,.22), transparent 58%);
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(4px);
+      animation: floatA 12s ease-in-out infinite alternate;
+    }
 
-    .grid{display:grid;gap:12px;grid-template-columns:repeat(12,1fr)}
-    .col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
+    body::after {
+      inset: auto -12% -28% auto;
+      width: 52vw;
+      height: 52vw;
+      background: radial-gradient(circle at center, rgba(77,231,200,.19), transparent 60%);
+      animation: floatB 13s ease-in-out infinite alternate;
+    }
 
-    .kpi{padding:14px;border:1px solid #2e447e;background:#122149;border-radius:14px}
-    .kpi .v{font-size:1.5rem;font-weight:800;margin:4px 0}.kpi .l{font-size:.9rem;color:#c5d3f2}
+    @keyframes floatA { from { transform: translateY(-14px); } to { transform: translateY(18px); } }
+    @keyframes floatB { from { transform: translateY(18px); } to { transform: translateY(-20px); } }
 
-    .flow{display:grid;gap:8px;margin-top:10px}
-    .flow div{padding:10px;border:1px solid #34508e;background:#10203f;border-radius:10px;font-size:.95rem;color:#dbe8ff}
+    .app { position: relative; z-index: 1; width: min(1320px, 94vw); margin: 20px auto 40px; }
 
-    .terminal{background:#060a14;border:1px solid #223968;border-radius:12px;padding:12px;height:270px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84rem;line-height:1.45}
-    .line{margin:0 0 6px;white-space:pre-wrap}
-    .ok{color:#86efac}.warn{color:#fcd34d}.err{color:#fca5a5}.info{color:#93c5fd}
+    .glass {
+      background: linear-gradient(140deg, rgba(18,27,55,.82), rgba(10,15,32,.68));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px) saturate(130%);
+      -webkit-backdrop-filter: blur(12px) saturate(130%);
+    }
 
-    .cards{display:grid;gap:10px}
-    .case{border:1px solid #334f8a;background:#122247;padding:12px;border-radius:12px}
-    .case h4{margin:0 0 6px}
-    .case ul{margin:0;padding-left:17px;color:#c7d5f4}
+    .topbar {
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
 
-    .timeline{list-style:none;padding:0;margin:0;display:grid;gap:8px}
-    .timeline li{padding:10px 12px;border:1px solid #36528f;border-radius:10px;background:#0f1f42}
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 38px; height: 38px; border-radius: 12px;
+      background: linear-gradient(140deg, var(--accent), var(--accent-2));
+      display: grid; place-items: center; color: #071129; font-weight: 900;
+      box-shadow: 0 10px 24px rgba(126,162,255,.45);
+    }
 
-    .tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#1d3266;border:1px solid #4569b6;color:#dce8ff;font-size:.75rem;margin-right:6px}
+    .brand h1 { margin: 0; font-size: clamp(1rem, 1.3vw, 1.35rem); letter-spacing: .01em; }
+    .brand p { margin: 2px 0 0; color: var(--muted); font-size: .88rem; }
 
-    .hidden{display:none}
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    button {
+      border: 1px solid rgba(159,186,255,.35);
+      background: linear-gradient(140deg, #1b2f61, #17264d);
+      color: #edf2ff;
+      padding: 9px 12px;
+      border-radius: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .2s transform, .2s filter;
+    }
+    button:hover { transform: translateY(-1px); filter: brightness(1.07); }
 
-    @media (max-width:1000px){
-      .layout{grid-template-columns:1fr}
-      .nav{position:relative;height:auto}
-      .col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 12}
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 14px;
+    }
+
+    .sidebar {
+      border-radius: var(--radius);
+      padding: 12px;
+      position: sticky;
+      top: 12px;
+      max-height: calc(100vh - 36px);
+      overflow: auto;
+    }
+
+    .sidebar h3 { margin: 6px 6px 10px; color: #d8e3ff; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; }
+    .tab {
+      width: 100%;
+      margin: 0 0 8px;
+      text-align: left;
+      border-radius: 12px;
+      background: linear-gradient(140deg, #12244a, #11203f);
+      border: 1px solid rgba(126,159,255,.27);
+    }
+    .tab.active { background: linear-gradient(140deg, #253f81, #1f346b); border-color: rgba(173,197,255,.62); }
+
+    .main { display: grid; gap: 14px; }
+    .section {
+      border-radius: var(--radius);
+      padding: 18px;
+      display: none;
+    }
+    .section.active { display: block; animation: fade .24s ease; }
+    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    h2 { margin: 0 0 8px; font-size: clamp(1.2rem, 1.9vw, 1.55rem); }
+    .lead { color: var(--muted); margin: 0 0 14px; line-height: 1.6; }
+
+    .grid { display: grid; gap: 12px; grid-template-columns: repeat(12, 1fr); }
+    .c4 { grid-column: span 4; } .c5 { grid-column: span 5; } .c6 { grid-column: span 6; }
+    .c7 { grid-column: span 7; } .c8 { grid-column: span 8; } .c12 { grid-column: span 12; }
+
+    .card {
+      background: linear-gradient(140deg, rgba(17,28,56,.8), rgba(11,18,38,.72));
+      border: 1px solid rgba(120,151,238,.28);
+      border-radius: 14px;
+      padding: 13px;
+    }
+
+    .kpi .v { font-size: 1.45rem; font-weight: 800; margin: 4px 0 2px; }
+    .muted { color: var(--muted); }
+    ul { margin: 7px 0 0 18px; padding: 0; color: #cfdbfa; }
+    li { margin-bottom: 6px; }
+
+    .badge { display: inline-block; margin-right: 6px; margin-bottom: 6px; padding: 5px 8px; border-radius: 999px; font-size: .75rem; border: 1px solid rgba(127,156,255,.42); background: rgba(127,156,255,.15); color: #dbe6ff; }
+
+    .terminal {
+      background: #030711;
+      border: 1px solid rgba(93,121,199,.45);
+      border-radius: 12px;
+      min-height: 280px;
+      max-height: 280px;
+      overflow: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .84rem;
+      padding: 12px;
+      line-height: 1.45;
+    }
+    .line { margin: 0 0 6px; white-space: pre-wrap; }
+    .info { color: #9ec5ff; }
+    .ok { color: var(--ok); }
+    .warn { color: var(--warn); }
+
+    .timeline { display: grid; gap: 8px; }
+    .timeline .step { border: 1px solid rgba(129,158,241,.35); border-radius: 11px; padding: 10px; background: rgba(14,24,48,.72); }
+
+    .hero {
+      background: radial-gradient(1200px 520px at 14% -18%, rgba(126,162,255,.20), transparent 60%),
+                  linear-gradient(145deg, rgba(20,31,61,.92), rgba(10,16,35,.85));
+      border: 1px solid rgba(140,168,245,.35);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 { font-size: clamp(1.5rem, 2.8vw, 2.2rem); margin-bottom: 10px; }
+
+    .small { font-size: .85rem; }
+
+    @media (max-width: 1020px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: relative; max-height: none; }
+      .c4, .c5, .c6, .c7, .c8 { grid-column: span 12; }
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="topbar">
-    <div class="brand">
-      <span class="dot"></span>
-      <div>
-        <div class="title">AtivoPlay × OpenClaw — Demonstração Ao Vivo</div>
-        <div class="subtitle">Mostrando poder real de IA para vendas, operação, suporte e expansão</div>
+  <div class="app">
+    <header class="topbar glass">
+      <div class="brand">
+        <div class="logo">A+</div>
+        <div>
+          <h1>AtivoPlay × OpenClaw — Experience Deck (Fev/2026)</h1>
+          <p>Demonstração premium: comercial + operação + automação + CS</p>
+        </div>
       </div>
-    </div>
-    <div class="actions">
-      <button onclick="startLiveDemo()">▶ Rodar demo ao vivo</button>
-      <button onclick="window.print()">🖨 Exportar PDF</button>
-      <button onclick="location.reload()">↺ Reset</button>
+      <div class="actions">
+        <button onclick="runDemo()">▶ Rodar demo ao vivo</button>
+        <button onclick="window.print()">🖨 Exportar PDF</button>
+        <button onclick="location.reload()">↺ Reiniciar</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar glass">
+        <h3>Capítulos</h3>
+        <button class="tab active" data-id="overview">1) Visão executiva</button>
+        <button class="tab" data-id="commercial">2) Máquina comercial com IA</button>
+        <button class="tab" data-id="ops">3) Operação preditiva de telas</button>
+        <button class="tab" data-id="automation">4) Alertas e rotinas automáticas</button>
+        <button class="tab" data-id="cs">5) Suporte e Customer Success</button>
+        <button class="tab" data-id="poc">6) PoC de 30 dias + KPI</button>
+        <button class="tab" data-id="script">7) Script para reunião com owner</button>
+      </aside>
+
+      <main class="main">
+        <section id="overview" class="section glass active">
+          <div class="hero">
+            <h2>Como mostrar poder real de IA em 8 minutos</h2>
+            <p class="lead">A tese: AtivoPlay já tem produto. OpenClaw adiciona uma camada de inteligência operacional e comercial que acelera resposta, reduz ruído e aumenta percepção de valor do cliente final.</p>
+            <span class="badge">AI Ops</span><span class="badge">Go-to-market</span><span class="badge">Escala</span><span class="badge">Automação de comunicação</span>
+          </div>
+
+          <div class="grid">
+            <div class="card kpi c4"><div class="muted">Tempo para proposta consultiva</div><div class="v">-50% a -70%</div><div class="muted small">Com prompts e templates por segmento.</div></div>
+            <div class="card kpi c4"><div class="muted">Incidentes sem tratamento</div><div class="v">-30% a -45%</div><div class="muted small">Alertas com regra + dono + SLA.</div></div>
+            <div class="card kpi c4"><div class="muted">Velocidade de decisão</div><div class="v">+2x</div><div class="muted small">Resumo executivo diário pronto.</div></div>
+
+            <div class="card c12">
+              <strong>Fluxo de valor (end-to-end):</strong>
+              <ul>
+                <li>Lead chega → IA qualifica e monta proposta por vertical.</li>
+                <li>Fechou? IA gera checklist de implantação + conteúdo inicial.</li>
+                <li>Operação viva → IA monitora risco, agenda e saúde das telas.</li>
+                <li>Retenção/upsell → IA entrega relatório de impacto e oportunidades.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="commercial" class="section glass">
+          <h2>Máquina comercial com IA (pré-vendas e fechamento)</h2>
+          <p class="lead">Você transforma um briefing falado em proposta de alto nível com plano tático e mensagem pronta para call.</p>
+          <div class="grid">
+            <div class="card c7">
+              <strong>Entregáveis automáticos:</strong>
+              <ul>
+                <li>Estratégia por segmento (varejo, food, imobiliário, fitness, corporativo).</li>
+                <li>Arquitetura de campanha por objetivo (tráfego, ticket médio, awareness).</li>
+                <li>Copy PT-BR/EN por persona (tom, CTA, variações A/B).</li>
+                <li>Pacotes recomendados (5/10/15 telas) com narrativa de evolução.</li>
+              </ul>
+            </div>
+            <div class="card c5">
+              <strong>Prompt de palco (copy/paste):</strong>
+              <p class="small muted">“Monte uma proposta para 12 telas em 4 lojas, foco almoço e ticket médio, plano de 30 dias, KPIs, cronograma e roteiro de implantação.”</p>
+              <hr style="border:none;border-top:1px solid rgba(150,175,240,.24);margin:10px 0">
+              <strong>Impacto na reunião:</strong>
+              <ul>
+                <li>Mais autoridade técnica imediata.</li>
+                <li>Menos dependência de pós-reunião.</li>
+                <li>Avanço de estágio no mesmo encontro.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="ops" class="section glass">
+          <h2>Operação preditiva para rede de digital signage</h2>
+          <p class="lead">Sai o modo reativo. Entra gestão por risco e prioridade, com linguagem executiva.</p>
+          <div class="grid">
+            <div class="card c6">
+              <strong>Detecção inteligente:</strong>
+              <ul>
+                <li>Telas offline por grupo/região + duração da indisponibilidade.</li>
+                <li>Playlists desatualizadas além do SLA.</li>
+                <li>Conflitos de agendamento por janela horária.</li>
+                <li>Padrão de reincidência (o que está voltando a quebrar).</li>
+              </ul>
+            </div>
+            <div class="card c6">
+              <strong>Ação e comunicação:</strong>
+              <ul>
+                <li>Resumo de status diário (semáforo da operação).</li>
+                <li>Top 5 riscos + recomendação prática.</li>
+                <li>Escalonamento automático para time técnico.</li>
+                <li>Visão semanal para owner/gestão.</li>
+              </ul>
+            </div>
+            <div class="card c12 small muted">
+              Exemplo de saída: “Rede em 95,1% de saúde. 4 telas offline em duas unidades por >25min. 2 campanhas com atraso de atualização. Risco moderado. Ação recomendada: reinício remoto + ajuste da janela 11h–15h.”
+            </div>
+          </div>
+        </section>
+
+        <section id="automation" class="section glass">
+          <h2>Automação, alertas e execução assistida</h2>
+          <p class="lead">Mostra ao vivo: regra dispara, resumo é gerado e comunicação sai pronta para time.</p>
+          <div class="grid">
+            <div class="card c5">
+              <strong>Regras que impressionam em demo:</strong>
+              <ul>
+                <li>“Se grupo SP offline >20 min → alerta técnico imediato.”</li>
+                <li>“Todo dia 08:00 → resumo operacional.”</li>
+                <li>“Sexta 17:00 → relatório executivo + backlog crítico.”</li>
+              </ul>
+              <p class="small muted">Clique em “Rodar demo ao vivo” para simular logs em tempo real.</p>
+            </div>
+            <div class="c7">
+              <div id="terminal" class="terminal"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="cs" class="section glass">
+          <h2>Suporte + Customer Success como diferencial competitivo</h2>
+          <p class="lead">IA também melhora relacionamento e retenção — não só operação técnica.</p>
+          <div class="grid">
+            <div class="card c6">
+              <strong>Suporte:</strong>
+              <ul>
+                <li>Macros inteligentes por tipo de incidente.</li>
+                <li>Base de resposta consistente para time.</li>
+                <li>Checklist de onboarding por perfil de cliente.</li>
+              </ul>
+            </div>
+            <div class="card c6">
+              <strong>CS / expansão:</strong>
+              <ul>
+                <li>Resumo semanal de valor entregue.</li>
+                <li>Detecção de oportunidades de upsell (novas telas/novas unidades).</li>
+                <li>QBR pronto com narrativa de resultados.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="poc" class="section glass">
+          <h2>PoC de 30 dias (modelo pronto para proposta)</h2>
+          <div class="timeline">
+            <div class="step"><strong>Semana 1:</strong> Setup de prompts, KPIs, regras de alerta e baseline operacional.</div>
+            <div class="step"><strong>Semana 2:</strong> Piloto em 10–20 telas (1 vertical), ajuste fino e coleta de evidências.</div>
+            <div class="step"><strong>Semana 3:</strong> Ativação comercial + relatórios automáticos para gestão/cliente.</div>
+            <div class="step"><strong>Semana 4:</strong> Avaliação de impacto, ROI preliminar e plano de escala.</div>
+          </div>
+          <div class="grid" style="margin-top:12px">
+            <div class="card c4"><strong>KPI 1</strong><p class="small muted">Tempo de proposta comercial</p></div>
+            <div class="card c4"><strong>KPI 2</strong><p class="small muted">Tempo médio de resolução de incidente</p></div>
+            <div class="card c4"><strong>KPI 3</strong><p class="small muted">Satisfação e retenção do cliente final</p></div>
+          </div>
+        </section>
+
+        <section id="script" class="section glass">
+          <h2>Script recomendado para sua conversa com o owner</h2>
+          <div class="timeline">
+            <div class="step"><strong>30s — Contexto:</strong> “Vocês têm produto sólido. A proposta é adicionar inteligência contínua na operação e no comercial.”</div>
+            <div class="step"><strong>90s — Valor:</strong> “Menos tempo em tarefas manuais, mais velocidade para fechar e mais visibilidade de risco.”</div>
+            <div class="step"><strong>3–4 min — Prova:</strong> Rodar prompt comercial + demo de alertas/logs + resumo executivo.</div>
+            <div class="step"><strong>60s — Fechamento:</strong> “Vamos validar em PoC de 30 dias com métricas claras e decisão de escala.”</div>
+          </div>
+          <p class="lead" style="margin-top:12px">Mensagem final: <strong>“AtivoPlay + OpenClaw = produto forte + inteligência operacional/comercial em tempo real.”</strong></p>
+        </section>
+      </main>
     </div>
   </div>
 
-  <div class="layout">
-    <aside class="nav">
-      <h3>Módulos</h3>
-      <button class="tab active" data-tab="visao">1. Visão Executiva</button>
-      <button class="tab" data-tab="vendas">2. Copiloto Comercial</button>
-      <button class="tab" data-tab="operacao">3. Operação Inteligente</button>
-      <button class="tab" data-tab="suporte">4. Suporte & CS</button>
-      <button class="tab" data-tab="automacao">5. Automação & Alertas</button>
-      <button class="tab" data-tab="poc">6. Plano de PoC 30 dias</button>
-      <button class="tab" data-tab="roteiro">7. Roteiro da reunião</button>
-    </aside>
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const sections = document.querySelectorAll('.section');
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      sections.forEach(s => s.classList.remove('active'));
+      document.getElementById(tab.dataset.id).classList.add('active');
+    }));
 
-    <main class="main">
-      <section id="visao" class="panel tab-panel">
-        <h2>1) Visão executiva: o que muda na prática</h2>
-        <p>OpenClaw vira a camada de inteligência da AtivoPlay: menos tarefas manuais, mais velocidade comercial e operação preditiva. Não substitui equipe — multiplica performance.</p>
-        <div class="grid" style="margin-top:12px">
-          <div class="kpi col-4"><div class="l">Tempo de proposta</div><div class="v">-50% a -70%</div><div class="l">Resposta comercial muito mais rápida</div></div>
-          <div class="kpi col-4"><div class="l">Incidentes sem dono</div><div class="v">-40%</div><div class="l">Alertas e rotinas automáticas</div></div>
-          <div class="kpi col-4"><div class="l">Percepção de valor</div><div class="v">+Alta</div><div class="l">Relatórios claros para cliente final</div></div>
-          <div class="panel col-12" style="padding:12px">
-            <span class="tag">Go-to-market</span><span class="tag">Escala operacional</span><span class="tag">Upsell</span><span class="tag">Fidelização</span>
-            <div class="flow">
-              <div>Lead entra → IA monta proposta por segmento</div>
-              <div>Cliente fecha → IA gera checklist de implantação + templates de conteúdo</div>
-              <div>Operação roda → IA monitora risco e envia resumo diário para responsáveis</div>
-              <div>Renovação/upsell → IA compila resultados e sugere próxima oferta</div>
-            </div>
-          </div>
-        </div>
-      </section>
+    const logs = [
+      ['info','[OpenClaw] Iniciando varredura da operação AtivoPlay...'],
+      ['ok','[OK] Rede: 193 telas conectadas • saúde geral 95.1%'],
+      ['warn','[ALERTA] Grupo SP-Norte: 2 telas offline por 24 minutos'],
+      ['info','[AÇÃO] Gerando resumo executivo do incidente...'],
+      ['ok','[ENVIADO] Telegram #operacoes: diagnóstico + recomendação'],
+      ['warn','[ALERTA] Campanha “Almoço Executivo” desatualizada em 3 unidades'],
+      ['info','[AÇÃO] Recomendação: janela 11h–15h + revalidação de playlist'],
+      ['ok','[COMERCIAL] Proposta de expansão 10→20 telas gerada em 39s'],
+      ['ok','[FIM] Demonstração concluída com sucesso']
+    ];
 
-      <section id="vendas" class="panel tab-panel hidden">
-        <h2>2) Copiloto Comercial (Pré-vendas + Vendas)</h2>
-        <div class="grid">
-          <div class="col-7">
-            <div class="cards">
-              <div class="case"><h4>Proposta consultiva em minutos</h4><ul><li>Plano por vertical (varejo, restaurante, imobiliário, academia, corporativo).</li><li>Estratégia de conteúdo por horário e objetivo (tráfego, ticket médio, awareness).</li><li>Copy PT-BR/EN com CTA e linguagem por persona.</li></ul></div>
-              <div class="case"><h4>Simulação de planos e preços</h4><ul><li>Comparativo entre pacotes por quantidade de telas.</li><li>Projeção de expansão (5→10→15 telas).</li><li>Material pronto para call de fechamento.</li></ul></div>
-            </div>
-          </div>
-          <div class="col-5 panel" style="padding:12px">
-            <h3 style="margin:0 0 8px">Prompt demo (ao vivo)</h3>
-            <p style="font-family:ui-monospace,monospace;color:#d2e2ff">"Crie proposta para rede com 12 telas em 4 lojas, foco em aumentar ticket médio no almoço, com plano de conteúdo de 30 dias, métricas e roteiro de implantação."</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="operacao" class="panel tab-panel hidden">
-        <h2>3) Operação Inteligente (NOC de Digital Signage com IA)</h2>
-        <div class="grid">
-          <div class="col-6 panel" style="padding:12px">
-            <h3 style="margin:0 0 8px">Detecção e priorização</h3>
-            <ul>
-              <li>Telas offline por grupo/região.</li>
-              <li>Playlists sem atualização acima do SLA.</li>
-              <li>Conflito de agendamento por horário.</li>
-              <li>Falhas recorrentes com sugestão de ação.</li>
-            </ul>
-          </div>
-          <div class="col-6 panel" style="padding:12px">
-            <h3 style="margin:0 0 8px">Resumo para gestão</h3>
-            <ul>
-              <li>Relatório diário automático (8h) com semáforo operacional.</li>
-              <li>Resumo semanal para diretoria com tendências.</li>
-              <li>Top 5 riscos da semana + plano corretivo.</li>
-            </ul>
-          </div>
-          <div class="col-12 panel" style="padding:12px">
-            <h3 style="margin:0 0 8px">Exemplo de saída executiva</h3>
-            <p>“Hoje: 94,8% da rede operacional. 6 telas com falha intermitente (2 lojas). 3 campanhas com atualização pendente. Risco moderado. Ação recomendada: reinício remoto grupo Sul + revisão de agenda da campanha ‘Almoço Express’.”</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="suporte" class="panel tab-panel hidden">
-        <h2>4) Suporte e Customer Success</h2>
-        <div class="grid">
-          <div class="col-6">
-            <ol class="timeline">
-              <li><strong>Onboarding automático:</strong> checklist por tipo de cliente + material inicial.</li>
-              <li><strong>Base de respostas:</strong> macros para dúvidas recorrentes com tom padronizado.</li>
-              <li><strong>Follow-up inteligente:</strong> mensagens de acompanhamento por etapa.</li>
-              <li><strong>QBR simplificado:</strong> IA monta resumo trimestral com valor entregue.</li>
-            </ol>
-          </div>
-          <div class="col-6 panel" style="padding:12px">
-            <h3 style="margin:0 0 8px">Impacto</h3>
-            <ul>
-              <li>Redução de tempo médio de resposta.</li>
-              <li>Mais consistência no atendimento.</li>
-              <li>Maior retenção por comunicação proativa.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section id="automacao" class="panel tab-panel hidden">
-        <h2>5) Automação e Alertas (Telegram/WhatsApp)</h2>
-        <div class="grid">
-          <div class="col-5 panel" style="padding:12px">
-            <h3 style="margin:0 0 8px">Regras exemplo</h3>
-            <ul>
-              <li>Se grupo “Lojas SP” offline > 20min → alerta time técnico.</li>
-              <li>Todo dia 08:00 → resumo operacional.</li>
-              <li>Sexta 17:00 → resumo executivo + backlog crítico.</li>
-            </ul>
-          </div>
-          <div class="col-7">
-            <div class="terminal" id="terminal"></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="poc" class="panel tab-panel hidden">
-        <h2>6) PoC detalhada — 30 dias</h2>
-        <div class="grid">
-          <div class="col-4 panel" style="padding:12px"><h3>Semana 1</h3><p>Mapeamento de fluxos, definição de KPIs, setup de rotinas e alertas.</p></div>
-          <div class="col-4 panel" style="padding:12px"><h3>Semana 2</h3><p>Piloto operacional em 1 segmento (10–20 telas), ajustes de prompt e playbook.</p></div>
-          <div class="col-4 panel" style="padding:12px"><h3>Semana 3</h3><p>Ampliação de uso comercial + relatórios automáticos para gestão.</p></div>
-          <div class="col-12 panel" style="padding:12px"><h3>Semana 4</h3><p>Avaliação de resultado, plano de escala, pacote recomendado e ROI preliminar.</p></div>
-        </div>
-      </section>
-
-      <section id="roteiro" class="panel tab-panel hidden">
-        <h2>7) Roteiro da conversa com o owner (fala sugerida)</h2>
-        <div class="cards">
-          <div class="case"><h4>Abertura (30s)</h4><ul><li>“Vocês já têm produto forte. A proposta aqui é adicionar inteligência operacional e comercial sem fricção.”</li></ul></div>
-          <div class="case"><h4>Valor (1 min)</h4><ul><li>“A IA reduz tempo de proposta, melhora resposta ao cliente e antecipa problemas da rede de telas.”</li></ul></div>
-          <div class="case"><h4>Demonstração (3–5 min)</h4><ul><li>Executar prompt comercial, gerar resumo operacional e mostrar alerta automatizado.</li></ul></div>
-          <div class="case"><h4>Fechamento (1 min)</h4><ul><li>“Vamos rodar PoC de 30 dias com metas claras: velocidade, SLA e satisfação do cliente.”</li></ul></div>
-        </div>
-      </section>
-    </main>
-  </div>
-</div>
-
-<script>
-  const tabs = document.querySelectorAll('.tab');
-  const panels = document.querySelectorAll('.tab-panel');
-
-  tabs.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabs.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const tab = btn.dataset.tab;
-      panels.forEach(p => p.classList.add('hidden'));
-      document.getElementById(tab).classList.remove('hidden');
-    });
-  });
-
-  const logLines = [
-    ['info', '[OpenClaw] Iniciando monitoramento da rede AtivoPlay...'],
-    ['ok',   '[OK] 187 telas conectadas • 94.8% uptime nas últimas 24h'],
-    ['warn', '[ALERTA] Grupo Lojas Sul: 3 telas offline há 27 minutos'],
-    ['info', '[AÇÃO] Gerando resumo executivo para gestor regional...'],
-    ['ok',   '[ENVIADO] Telegram #operacoes: resumo diário + recomendações'],
-    ['warn', '[ALERTA] Campanha “Menu Executivo” sem atualização em 4 unidades'],
-    ['info', '[AÇÃO] Sugestão aplicada: agendamento 11:00–15:00 em todas as lojas'],
-    ['ok',   '[CS] Relatório semanal preparado para reunião com cliente final'],
-    ['info', '[COMERCIAL] Proposta para expansão 10→20 telas pronta em 42 segundos'],
-    ['ok',   '[FIM] Fluxo demonstrativo concluído com sucesso']
-  ];
-
-  function typeLine(term, klass, text, delay) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        const p = document.createElement('div');
-        p.className = 'line ' + klass;
-        p.textContent = text;
-        term.appendChild(p);
-        term.scrollTop = term.scrollHeight;
-        resolve();
-      }, delay);
-    });
-  }
-
-  async function startLiveDemo() {
-    const autoTab = document.querySelector('[data-tab="automacao"]');
-    autoTab.click();
-    const term = document.getElementById('terminal');
-    term.innerHTML = '';
-
-    for (const [klass, text] of logLines) {
-      await typeLine(term, klass, text, 550);
+    function addLine(cls, text, delay, term) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const el = document.createElement('div');
+          el.className = `line ${cls}`;
+          el.textContent = text;
+          term.appendChild(el);
+          term.scrollTop = term.scrollHeight;
+          resolve();
+        }, delay);
+      });
     }
-  }
-</script>
+
+    async function runDemo(){
+      document.querySelector('[data-id="automation"]').click();
+      const term = document.getElementById('terminal');
+      term.innerHTML = '';
+      for (const [cls, text] of logs) await addLine(cls, text, 520, term);
+    }
+  </script>
 </body>
 </html>
