@@ -3,77 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AtivoPlay × OpenClaw — Intelligent Routing Demo</title>
+  <title>Alec Whitters × AtivoPlay — Intelligent Routing Experience</title>
   <style>
     :root {
-      --bg:#060915;
-      --bg2:#0c1430;
-      --panel:rgba(16,24,50,.78);
-      --line:rgba(132,164,255,.28);
+      --bg:#050813;
+      --bg2:#0b1230;
+      --panel:rgba(14,22,45,.78);
+      --panel2:rgba(18,28,56,.78);
+      --line:rgba(130,160,245,.28);
       --text:#eef3ff;
-      --muted:#b9c8ef;
-      --accent:#7ea4ff;
-      --accent2:#3fe0c0;
-      --hot:#ff7fb0;
+      --muted:#b9c7e8;
+      --accent:#82a8ff;
+      --accent2:#42e0c1;
       --ok:#86efac;
       --warn:#fcd34d;
-      --danger:#fca5a5;
       --radius:18px;
-      --shadow:0 18px 50px rgba(0,0,0,.45);
+      --shadow:0 16px 48px rgba(0,0,0,.46);
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(1200px 600px at 90% -20%,#2a4f9b55,transparent 55%),linear-gradient(145deg,var(--bg),var(--bg2));}
-    body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(900px 500px at -10% 110%,#2ee5c322,transparent 65%)}
+    html,body{margin:0;padding:0;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(1200px 700px at 92% -18%,#2f54a644,transparent 55%),linear-gradient(145deg,var(--bg),var(--bg2));}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(900px 560px at -12% 105%,#3ce2c222,transparent 64%)}
 
-    .app{width:min(1320px,94vw);margin:18px auto 36px}
-    .glass{background:linear-gradient(145deg,rgba(19,29,60,.84),rgba(11,17,37,.78));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+    .app{width:min(1320px,94vw);margin:18px auto 34px}
+    .glass{background:linear-gradient(145deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(10px)}
 
-    .top{padding:16px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#0a1230;font-weight:900}
-    .brand h1{margin:0;font-size:clamp(1rem,1.5vw,1.35rem)}
-    .brand p{margin:2px 0 0;color:var(--muted);font-size:.88rem}
-
+    .top{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-weight:900;color:#091227}
+    h1{margin:0;font-size:clamp(1rem,1.6vw,1.35rem)}
+    .sub{margin:2px 0 0;color:var(--muted);font-size:.88rem}
     .actions{display:flex;gap:8px;flex-wrap:wrap}
-    button{background:linear-gradient(135deg,#1d3468,#16284f);border:1px solid #4261aa;color:#ebf1ff;padding:9px 12px;border-radius:11px;font-weight:650;cursor:pointer}
-    button:hover{filter:brightness(1.1)}
+    button{background:linear-gradient(135deg,#1b3368,#172a56);border:1px solid #4769b6;color:#e9f0ff;padding:9px 12px;border-radius:11px;font-weight:650;cursor:pointer}
 
-    .layout{display:grid;grid-template-columns:285px 1fr;gap:14px;margin-top:14px}
+    .layout{display:grid;grid-template-columns:290px 1fr;gap:14px;margin-top:14px}
     .nav{padding:12px;position:sticky;top:10px;max-height:calc(100vh - 24px);overflow:auto}
-    .nav h3{margin:5px 6px 10px;font-size:.8rem;color:#dce7ff;text-transform:uppercase;letter-spacing:.08em}
-    .tab{width:100%;text-align:left;margin-bottom:8px;border-radius:12px;background:linear-gradient(135deg,#13244a,#10203f);border:1px solid #395791}
-    .tab.active{background:linear-gradient(135deg,#294887,#1e376a);border-color:#85aaff}
+    .nav h3{margin:6px 6px 10px;font-size:.8rem;color:#dce8ff;text-transform:uppercase;letter-spacing:.08em}
+    .tab{width:100%;text-align:left;margin-bottom:8px;border-radius:12px;background:linear-gradient(135deg,#13244a,#10203f);border:1px solid #375792}
+    .tab.active{background:linear-gradient(135deg,#2a4887,#1f376a);border-color:#89adff}
 
     .main{display:grid;gap:14px}
     .section{padding:18px;display:none}
-    .section.active{display:block;animation:fade .22s ease}
-    @keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:none}}
+    .section.active{display:block}
 
     h2{margin:0 0 8px;font-size:clamp(1.2rem,2vw,1.55rem)}
     .lead{margin:0 0 14px;color:var(--muted);line-height:1.6}
-
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
     .c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
-
-    .card{background:rgba(12,20,42,.72);border:1px solid rgba(129,158,245,.28);border-radius:14px;padding:13px}
-    ul{margin:8px 0 0 18px;padding:0;color:#cfdbfc}
-    li{margin-bottom:6px}
+    .card{background:rgba(11,19,40,.72);border:1px solid rgba(131,160,245,.26);border-radius:14px;padding:13px}
     .kpi .v{font-size:1.45rem;font-weight:800;margin:4px 0}
     .muted{color:var(--muted)}
+    ul{margin:8px 0 0 18px;padding:0;color:#cfdbfc}
+    li{margin-bottom:6px}
 
-    .pill{display:inline-block;margin:0 6px 6px 0;padding:5px 8px;border-radius:999px;font-size:.75rem;border:1px solid #4d71be;background:#1b3060;color:#dce8ff}
+    .pill{display:inline-block;margin:0 6px 6px 0;padding:5px 8px;border-radius:999px;font-size:.75rem;border:1px solid #4f73c3;background:#1b3060;color:#dce8ff}
 
     .flow{display:grid;gap:8px}
-    .flow .node{padding:10px;border:1px solid #3a589a;background:#112247;border-radius:11px}
+    .flow .node{padding:10px;border-radius:11px;border:1px solid #3d5d9f;background:#112247}
 
-    .terminal{background:#040813;border:1px solid #2e4d8f;border-radius:12px;min-height:300px;max-height:300px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84rem;line-height:1.45;padding:12px}
-    .line{white-space:pre-wrap;margin:0 0 6px}
-    .info{color:#9dc5ff}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--danger)}
+    .terminal{background:#040813;border:1px solid #2f4f93;border-radius:12px;min-height:290px;max-height:290px;overflow:auto;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84rem;line-height:1.45}
+    .line{margin:0 0 6px;white-space:pre-wrap}.info{color:#9dc5ff}.ok{color:var(--ok)}.warn{color:var(--warn)}
 
-    .table{width:100%;border-collapse:collapse;font-size:.9rem}
-    .table th,.table td{border-bottom:1px solid rgba(140,168,238,.22);padding:8px;text-align:left}
-    .table th{color:#dce8ff;font-weight:700}
-    .good{color:var(--ok);font-weight:700}.hot{color:#ff9ec7;font-weight:700}
+    table{width:100%;border-collapse:collapse;font-size:.9rem}
+    th,td{border-bottom:1px solid rgba(139,167,236,.2);padding:8px;text-align:left}
+    th{color:#dce8ff}
 
     @media (max-width:1040px){
       .layout{grid-template-columns:1fr}
@@ -86,85 +78,87 @@
   <div class="app">
     <header class="top glass">
       <div class="brand">
-        <div class="logo">IR</div>
+        <div class="logo">AW</div>
         <div>
-          <h1>Intelligent Routing Demo — Amazon Signals ➜ Mercado Livre Execution</h1>
-          <p>Não é pitch. É demonstração operacional de como IA pode funcionar no modelo dele.</p>
+          <h1>Alec Whitters × AtivoPlay — Intelligent Routing Experience</h1>
+          <p class="sub">Amazon market signals → decisão inteligente → execução no Mercado Livre (com integração OpenClaw)</p>
         </div>
       </div>
       <div class="actions">
-        <button onclick="runLive()">▶ Rodar simulação ao vivo</button>
-        <button onclick="openTab('architecture')">🧠 Arquitetura</button>
+        <button onclick="runLive()">▶ Rodar simulação</button>
         <button onclick="window.print()">🖨 PDF</button>
       </div>
     </header>
 
     <div class="layout">
       <aside class="nav glass">
-        <h3>Demo map</h3>
-        <button class="tab active" data-id="vision">1) O que isso faz</button>
-        <button class="tab" data-id="architecture">2) Arquitetura de inteligência</button>
-        <button class="tab" data-id="signals">3) Signals engine</button>
-        <button class="tab" data-id="routing">4) Intelligent routing</button>
-        <button class="tab" data-id="execution">5) Execução ML</button>
-        <button class="tab" data-id="risk">6) Risco e proteção</button>
-        <button class="tab" data-id="live">7) Simulação ao vivo</button>
+        <h3>Experience map</h3>
+        <button class="tab active" data-id="overview">1) Panorama</button>
+        <button class="tab" data-id="architecture">2) Arquitetura</button>
+        <button class="tab" data-id="signals">3) Signals</button>
+        <button class="tab" data-id="routing">4) Routing</button>
+        <button class="tab" data-id="execution">5) Execução</button>
+        <button class="tab" data-id="openclaw">6) OpenClaw tie-ins</button>
+        <button class="tab" data-id="live">7) Simulação</button>
       </aside>
 
       <main class="main">
-        <section id="vision" class="section glass active">
-          <h2>1) O que este sistema entrega (em linguagem de negócio)</h2>
-          <p class="lead">Captura sinais de mercado na Amazon, decide automaticamente <strong>o que vale migrar para Mercado Livre</strong>, com preço, timing e prioridade. A equipe só valida exceções.</p>
+        <section id="overview" class="section glass active">
+          <h2>1) Panorama: sistema de oportunidade contínua</h2>
+          <p class="lead">Este fluxo usa sinais de mercado na Amazon para identificar oportunidades e rotear automaticamente o que deve ser executado no Mercado Livre, com proteção de margem e controle de risco.</p>
           <div class="grid">
-            <div class="card kpi c4"><div class="muted">Caça de oportunidade</div><div class="v">24/7</div><div class="muted">Sem depender de análise manual contínua</div></div>
-            <div class="card kpi c4"><div class="muted">Velocidade de reação</div><div class="v">Minutos</div><div class="muted">Ajuste por mudança de sinal</div></div>
-            <div class="card kpi c4"><div class="muted">Foco da equipe</div><div class="v">Exceções</div><div class="muted">IA faz triagem e prioridade</div></div>
+            <div class="card kpi c4"><div class="muted">Scanning de mercado</div><div class="v">24/7</div><div class="muted">Sem depender de análise manual constante</div></div>
+            <div class="card kpi c4"><div class="muted">Tempo de resposta</div><div class="v">Minutos</div><div class="muted">Mudança de sinal vira ação</div></div>
+            <div class="card kpi c4"><div class="muted">Operação humana</div><div class="v">Exceções</div><div class="muted">IA faz triagem e prioridade</div></div>
             <div class="card c12">
-              <span class="pill">Amazon signals</span><span class="pill">Cross-market arbitrage</span><span class="pill">Mercado Livre routing</span><span class="pill">Auto-pricing</span><span class="pill">Risk guardrails</span>
+              <span class="pill">Cross-market intelligence</span>
+              <span class="pill">Opportunity scoring</span>
+              <span class="pill">Risk guardrails</span>
+              <span class="pill">Auto-pricing</span>
+              <span class="pill">Execution loop</span>
             </div>
           </div>
         </section>
 
         <section id="architecture" class="section glass">
-          <h2>2) Arquitetura de inteligência (modelo operacional)</h2>
-          <p class="lead">Pipeline em 5 camadas com decisão assistida por IA e execução controlada.</p>
+          <h2>2) Arquitetura de inteligência aplicada</h2>
+          <p class="lead">Modelo em camadas para transformar sinais em decisão e decisão em execução.</p>
           <div class="flow">
-            <div class="node"><strong>Camada A — Coleta de sinais:</strong> preço, rank de vendas, reviews recentes, ruptura de estoque, sazonalidade, posição de concorrentes.</div>
-            <div class="node"><strong>Camada B — Normalização:</strong> limpeza de dados, deduplicação de SKUs, mapeamento de categorias e atributos comparáveis.</div>
-            <div class="node"><strong>Camada C — Scoring:</strong> OpportunityScore + MarginScore + VelocityScore + RiskScore.</div>
-            <div class="node"><strong>Camada D — Routing:</strong> engine decide canal/prioridade/estratégia de listing/preço alvo no Mercado Livre.</div>
-            <div class="node"><strong>Camada E — Feedback loop:</strong> monitora performance do listing, reprecifica e aprende com conversão real.</div>
+            <div class="node"><strong>Camada A — Coleta:</strong> preço, rank, reviews, ruptura, sazonalidade, concorrência.</div>
+            <div class="node"><strong>Camada B — Normalização:</strong> limpeza de dados, mapeamento SKU/categoria e comparabilidade.</div>
+            <div class="node"><strong>Camada C — Scoring:</strong> Opportunity, Margin, Velocity e Risk score por item.</div>
+            <div class="node"><strong>Camada D — Routing:</strong> decisão de publicar/ajustar/pausar no Mercado Livre.</div>
+            <div class="node"><strong>Camada E — Feedback:</strong> aprende com conversão real e melhora próxima decisão.</div>
           </div>
         </section>
 
         <section id="signals" class="section glass">
-          <h2>3) Signals engine: como a IA lê o mercado</h2>
-          <p class="lead">A IA transforma sinais dispersos em um score único de oportunidade acionável.</p>
+          <h2>3) Signals engine: leitura inteligente de mercado</h2>
           <div class="grid">
             <div class="card c6">
-              <strong>Sinais de demanda:</strong>
+              <strong>Sinais de demanda</strong>
               <ul>
-                <li>Subida acelerada no sales rank.</li>
-                <li>Crescimento de avaliações em janela curta.</li>
-                <li>Picos sazonais por categoria/região.</li>
+                <li>Subida rápida de rank em janela curta</li>
+                <li>Aumento de reviews em produtos comparáveis</li>
+                <li>Picos sazonais por categoria</li>
               </ul>
             </div>
             <div class="card c6">
-              <strong>Sinais de oferta/concorrência:</strong>
+              <strong>Sinais de oferta/risco</strong>
               <ul>
-                <li>Quebra de estoque dos líderes.</li>
-                <li>Dispersão de preços acima do normal.</li>
-                <li>Queda de qualidade percebida (reviews negativos recentes).</li>
+                <li>Concorrentes com estoque zerado</li>
+                <li>Volatilidade de preço acima do baseline</li>
+                <li>Piora recente de qualidade percebida</li>
               </ul>
             </div>
             <div class="card c12">
-              <table class="table">
-                <thead><tr><th>Signal</th><th>Peso</th><th>Interpretação</th><th>Ação sugerida</th></tr></thead>
+              <table>
+                <thead><tr><th>Signal</th><th>Peso</th><th>Leitura</th><th>Ação</th></tr></thead>
                 <tbody>
-                  <tr><td>Sales Rank ↑ forte</td><td>30%</td><td>Demanda aquecendo</td><td class="good">Priorizar entrada</td></tr>
-                  <tr><td>Competidor sem estoque</td><td>25%</td><td>Janela de captura</td><td class="good">Acelerar listing</td></tr>
-                  <tr><td>Preço muito volátil</td><td>20%</td><td>Risco de margem</td><td class="hot">Entrar com proteção</td></tr>
-                  <tr><td>Reviews negativos ↑</td><td>25%</td><td>Risco de devolução</td><td class="hot">Bloquear ou revisar</td></tr>
+                  <tr><td>Rank subindo forte</td><td>30%</td><td>Demanda aquecendo</td><td>Priorizar entrada</td></tr>
+                  <tr><td>Concorrente sem estoque</td><td>25%</td><td>Janela de captura</td><td>Acelerar publicação</td></tr>
+                  <tr><td>Preço instável</td><td>20%</td><td>Risco de margem</td><td>Entrar com limite</td></tr>
+                  <tr><td>Reviews negativos ↑</td><td>25%</td><td>Risco de devolução</td><td>Revisão humana</td></tr>
                 </tbody>
               </table>
             </div>
@@ -172,67 +166,65 @@
         </section>
 
         <section id="routing" class="section glass">
-          <h2>4) Intelligent Routing: decisão automática do que fazer</h2>
-          <p class="lead">Aqui está o “cérebro”: ele decide o melhor caminho por SKU, com regra + IA.</p>
+          <h2>4) Intelligent routing: o cérebro de decisão</h2>
+          <p class="lead">A decisão final por SKU combina score + regras de proteção.</p>
           <div class="grid">
             <div class="card c7">
-              <strong>Lógica de decisão (simplificada):</strong>
               <ul>
-                <li>Se OpportunityScore alto e RiskScore baixo → publicar imediatamente no ML.</li>
-                <li>Se margem esperada boa mas risco médio → publicar com estoque e preço limitados.</li>
-                <li>Se risco alto → encaminhar para validação humana (não autopublica).</li>
-                <li>Se performance cair após 24–48h → engine reprecifica ou pausa.</li>
+                <li>Opportunity alto + Risk baixo → publica automaticamente.</li>
+                <li>Margem viável + Risk médio → publica com estoque/preço controlado.</li>
+                <li>Risk alto → bloqueia autoexecução e pede validação humana.</li>
+                <li>Baixa performance pós-publicação → reprecifica, reposiciona ou pausa.</li>
               </ul>
             </div>
             <div class="card c5">
-              <strong>Saídas automáticas por SKU:</strong>
+              <strong>Output por SKU</strong>
               <ul>
-                <li>Preço inicial sugerido</li>
-                <li>Tática de frete/entrega</li>
+                <li>Preço inicial recomendado</li>
                 <li>Nível de estoque liberado</li>
-                <li>Priorização da campanha</li>
+                <li>Prioridade de campanha</li>
+                <li>Status de risco</li>
               </ul>
             </div>
           </div>
         </section>
 
         <section id="execution" class="section glass">
-          <h2>5) Execução no Mercado Livre + reotimização contínua</h2>
-          <p class="lead">Não para em “insight”: vai até execução e ajuste por resultado real.</p>
+          <h2>5) Execução no Mercado Livre + melhoria contínua</h2>
           <div class="grid">
             <div class="card c6">
-              <strong>Execução:</strong>
+              <strong>Execução</strong>
               <ul>
-                <li>Publicação/atualização de listings priorizados.</li>
-                <li>Preço de entrada com limite mínimo de margem.</li>
-                <li>Textos/títulos otimizados por intenção de busca.</li>
+                <li>Publica/atualiza listings elegíveis</li>
+                <li>Respeita piso de margem obrigatório</li>
+                <li>Ativa estratégia por categoria</li>
               </ul>
             </div>
             <div class="card c6">
-              <strong>Feedback loop:</strong>
+              <strong>Feedback loop</strong>
               <ul>
-                <li>Monitora CTR, conversão, lucro, devolução e posição.</li>
-                <li>Ajusta preço e prioridade com base no desempenho.</li>
-                <li>Aprende padrões por categoria e sazonalidade.</li>
+                <li>Monitora CTR, conversão, lucro e devolução</li>
+                <li>Reotimiza preço e prioridade automaticamente</li>
+                <li>Aprende padrões por janela temporal</li>
               </ul>
             </div>
           </div>
         </section>
 
-        <section id="risk" class="section glass">
-          <h2>6) Risco, governança e segurança (o que evita prejuízo)</h2>
-          <p class="lead">Demonstra maturidade: IA com guardrails e trilha de auditoria.</p>
+        <section id="openclaw" class="section glass">
+          <h2>6) OpenClaw tie-ins (onde entra na prática)</h2>
+          <p class="lead">OpenClaw atua como camada de orquestração, alerta e operação assistida nesse fluxo.</p>
           <div class="grid">
-            <div class="card c4"><strong>Preço mínimo</strong><p class="muted">Nunca publica abaixo da margem-alvo.</p></div>
-            <div class="card c4"><strong>Budget cap</strong><p class="muted">Limite diário/semanal por categoria.</p></div>
-            <div class="card c4"><strong>Human override</strong><p class="muted">Qualquer operador pode pausar rota.</p></div>
-            <div class="card c12"><strong>Audit trail:</strong><p class="muted">Cada decisão registra sinais usados, score, regra aplicada e resultado posterior — útil para melhoria contínua e confiança do dono.</p></div>
+            <div class="card c4"><strong>Orquestração</strong><p class="muted">Agenda e coordena rotinas de coleta/scoring/checagem.</p></div>
+            <div class="card c4"><strong>Alertas inteligentes</strong><p class="muted">Envia alertas acionáveis em Telegram/WhatsApp para exceções reais.</p></div>
+            <div class="card c4"><strong>Resumo executivo</strong><p class="muted">Consolida resultado diário e highlights para decisão rápida.</p></div>
+            <div class="card c12"><strong>Assistente operacional</strong><p class="muted">Permite consultas em linguagem natural: “quais SKUs entraram hoje com maior margem?”, “quais foram bloqueados por risco?”, “o que precisa revisão humana agora?”.</p></div>
           </div>
         </section>
 
         <section id="live" class="section glass">
-          <h2>7) Simulação ao vivo — “como funcionaria no dia a dia”</h2>
-          <p class="lead">Clique em <strong>Rodar simulação ao vivo</strong> para mostrar o fluxo completo com decisões reais por eventos de mercado.</p>
+          <h2>7) Simulação operacional ao vivo</h2>
+          <p class="lead">Demonstração do fluxo em tempo real: sinal → score → decisão → execução → ajuste.</p>
           <div id="terminal" class="terminal"></div>
         </section>
       </main>
@@ -249,19 +241,18 @@
     tabs.forEach(t=>t.addEventListener('click',()=>openTab(t.dataset.id)));
 
     const logs=[
-      ['info','[00:00] Iniciando coleta de sinais Amazon (categoria: Eletrônicos / Casa / Fitness)'],
-      ['ok','[00:03] 2.184 SKUs processados | 164 candidatos preliminares'],
-      ['warn','[00:05] Signal detectado: Competidor A sem estoque em 3 SKUs de alta demanda'],
-      ['info','[00:06] Engine calculando OpportunityScore + MarginScore + RiskScore...'],
-      ['ok','[00:07] SKU ML-Candidate #8841 score 87/100 | margem esperada 18.4%'],
-      ['info','[00:08] Routing: publicar SKU #8841 no Mercado Livre com estoque inicial limitado'],
-      ['ok','[00:09] Listing criado | preço inicial R$ 189,90 | piso de margem protegido'],
-      ['warn','[00:11] SKU #7740 com demanda alta, porém risco logístico elevado'],
-      ['info','[00:11] Routing: enviar para validação humana antes de publicar'],
-      ['ok','[00:14] Conversão inicial SKU #8841: 3.8% (acima da média da categoria)'],
-      ['info','[00:16] Reotimização: ajuste de preço para R$ 184,90 mantendo margem alvo'],
-      ['ok','[00:18] Resultado parcial: +22 SKUs roteados, 14 publicados, 8 em revisão segura'],
-      ['ok','[00:20] Fim da simulação: operação estável, risco controlado, aprendizado salvo']
+      ['info','[00:00] Coleta Amazon iniciada | categorias: eletrônicos, casa, fitness'],
+      ['ok','[00:03] 2.164 SKUs processados | 152 candidatos iniciais'],
+      ['warn','[00:05] Janela detectada: concorrente sem estoque em 3 itens de alta demanda'],
+      ['info','[00:06] Engine calculando Opportunity/Margin/Velocity/Risk scores...'],
+      ['ok','[00:07] SKU #8841 score 88/100 | margem esperada 18.2%'],
+      ['info','[00:08] Routing: publicar no Mercado Livre com estoque inicial limitado'],
+      ['ok','[00:09] Listing criado | preço inicial R$ 189,90 | margem protegida'],
+      ['warn','[00:11] SKU #7740 risco logístico alto | autoexecução bloqueada'],
+      ['info','[00:12] Encaminhado para validação humana + alerta OpenClaw'],
+      ['ok','[00:14] Conversão inicial SKU #8841: 3.9% (acima da média)'],
+      ['info','[00:16] Reotimização: preço ajustado para R$ 184,90 sem quebrar margem'],
+      ['ok','[00:20] Resultado parcial: 21 SKUs roteados, 13 publicados, 8 em revisão segura']
     ];
 
     function wait(ms){return new Promise(r=>setTimeout(r,ms));}
